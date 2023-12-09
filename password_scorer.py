@@ -188,6 +188,7 @@ def main():
         'rule_name':'Default',
         'output_file':None,
         'limit':0,
+        'prefixcount': False,
 
         # OMEN Options
         #
@@ -248,17 +249,11 @@ def main():
 
     false_negative = 0
     try:
-        input_value = file_input.read_password()
-        while input_value:
-
-            result = pw_parser.parse(input_value)
-
+        for password in file_input.read_password():
+            result = pw_parser.parse(password)
             writer.write(result)
-
             if result[1] == 'o':
                 false_negative += 1
-
-            input_value = file_input.read_password()
 
     except Exception as msg:
         traceback.print_exc(file=sys.stdout)
